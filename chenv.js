@@ -1,10 +1,14 @@
 const R = require('ramda')
 const Validation = require('folktale/validation')
+const path = require('path')
+const fs = require('fs')
 
 const { Success, Failure } = Validation
 
 const Chenv = () => {
   const error = (msg) => console.error('Failed: ' + msg)
+
+  const printErrors = (value) => error(R.join('; ', value))
 
   const defaults = {
     configsDir: '~/.chenv'
@@ -16,7 +20,7 @@ const Chenv = () => {
     const isValid = validate(options)
     isValid.matchWith({
       Success: ({ value }) => execChanges(options),
-      Failure: ({ value }) => error(R.join('; ', value))
+      Failure: ({ value }) => printErrors(value)
     })
   }
 
@@ -42,8 +46,23 @@ const Chenv = () => {
       [`you must include an environment name`]
     )
 
-  const execChanges = (options) => {
-    console.log('It works!')
+  const validateConfigFilePresent = ({ configsDir, configName }) => {
+    const configFilepath = path.join(configsDir, configName)
+    try {
+      fs.statSync(configFilepath)
+      return Success(configFilepath)
+    }
+    catch (err) {
+      return Failure([`config '${configFilepath}' did not exist`])
+    }
+  }
+
+  const execChanges = ({ configsDir, configName, envName }) => {
+    validateConfigFilePresent({ configsDir, configName })
+      .matchWith({
+        Success: ({ value }) => console.log('File exists!'),
+        Failure: ({ value }) => printErrors(value)
+      })
   }
 
   return {
