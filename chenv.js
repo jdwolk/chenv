@@ -4,23 +4,14 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const shell = require('shelljs')
+const Utils = require('./utils')
 
 const { Success, Failure } = Validation
+const { expandDir, error, log } = Utils
 
 const Chenv = () => {
-  const error = (msg) => console.error('Failed: ' + msg)
-  const log = console.log
-
   const printErrors = (value) => error(R.join('; ', value))
 
-  const expandDir = (filepath) => {
-    const pathParts = filepath.split(path.sep);
-
-    if (pathParts[0] === '~') {
-      pathParts[0] = os.homedir();
-    }
-    return path.join(...pathParts);
-  }
 
   const defaults = {
     configsDir: '~/.chenv'
@@ -72,6 +63,8 @@ const Chenv = () => {
 
   const execChanges = ({ configsDir, configName, envName }) => {
     const configFile = path.join(expandDir(configsDir), configName, envName + '.sh')
+    const envFile = path.join(expandDir(configsDir), configName, '.currentEnv')
+    fs.writeFileSync(envFile, envName)
     // TODO: make ~/.chenv if it doesn't exist?
     log(`Changing ${configName} config to ${envName} (${configFile})`)
     shell.exec(configFile)
