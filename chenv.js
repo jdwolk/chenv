@@ -59,7 +59,7 @@ const Chenv = () => {
   }
 
   const execChanges = ({ configsDir, configName, envName }) => {
-    console.log('File exists!'),
+    console.log('File exists!')
   }
 
   return {
