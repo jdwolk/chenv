@@ -3,6 +3,7 @@ const Validation = require('folktale/validation')
 const path = require('path')
 const fs = require('fs')
 const os = require('os')
+const shell = require('shelljs')
 
 const { Success, Failure } = Validation
 
@@ -64,7 +65,6 @@ const Chenv = () => {
       return Success(configFilepath)
     }
     catch (err) {
-      console.error(err)
       return Failure([`config '${configFilepath}' did not exist`])
     }
   }
@@ -72,8 +72,7 @@ const Chenv = () => {
   const execChanges = ({ configsDir, configName, envName }) => {
     const configFile = path.join(expandDir(configsDir), configName, envName + '.sh')
     // TODO: make ~/.chenv if it doesn't exist?
-    const contents = fs.readFileSync(configFile, 'utf8')
-    console.log(contents)
+    shell.exec(configFile)
   }
 
   return {
@@ -82,6 +81,7 @@ const Chenv = () => {
 }
 
 Chenv().run({
-  configName: 'pongalo',
-  envName: 'dev'
+  configName: process.argv[2],
+  envName: process.argv[3]
 })
+

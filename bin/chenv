@@ -1,2 +1,2 @@
 SCRIPT_DIR="$(dirname "$0")"
-node $SCRIPT_DIR/../chenv.js
+node $SCRIPT_DIR/../chenv.js $1 $2
