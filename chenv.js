@@ -9,6 +9,7 @@ const { Success, Failure } = Validation
 
 const Chenv = () => {
   const error = (msg) => console.error('Failed: ' + msg)
+  const log = console.log
 
   const printErrors = (value) => error(R.join('; ', value))
 
@@ -72,7 +73,9 @@ const Chenv = () => {
   const execChanges = ({ configsDir, configName, envName }) => {
     const configFile = path.join(expandDir(configsDir), configName, envName + '.sh')
     // TODO: make ~/.chenv if it doesn't exist?
+    log(`Changing ${configName} config to ${envName} (${configFile})`)
     shell.exec(configFile)
+    log('Done!')
   }
 
   return {
