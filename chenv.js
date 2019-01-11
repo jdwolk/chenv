@@ -27,6 +27,7 @@ const Chenv = () => {
   const validate = (options) =>
     Success().concat(validateConfigNamePresent(options))
              .concat(validateEnvNamePresent(options))
+             .concat(validateConfigFilePresent(options))
 
   const validateObjectPresence = R.curry((key, message, object) => {
     const value = object[key]
@@ -58,11 +59,7 @@ const Chenv = () => {
   }
 
   const execChanges = ({ configsDir, configName, envName }) => {
-    validateConfigFilePresent({ configsDir, configName })
-      .matchWith({
-        Success: ({ value }) => console.log('File exists!'),
-        Failure: ({ value }) => printErrors(value)
-      })
+    console.log('File exists!'),
   }
 
   return {
