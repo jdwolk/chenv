@@ -1,6 +1,6 @@
 # chenv
 
-`chenv` (CHange ENV) is a CLI tool for managing config changes to multiple codebases simultaneously.
+`chenv` (CHange ENV) is a CLI tool for managing config changes to multiple codebases simultaneously. Sort of a meta-config tool.
 
 Imagine you have 3 codebases for a project called `foobar`:
 
@@ -28,6 +28,7 @@ $ whichenv foobar // => staging
 
 Awwwww yeah.
 
+
 ## Install
 
 ```
@@ -36,15 +37,6 @@ $ mkdir ~/.chenv
 ```
 
 You should also copy the shell scripts in `bin/` to somewhere on your `$PATH`. You'll need to change paths so they point to wherever you installed `chenv` (`~/.chenv` in the example above).
-
-
-## What does `chenv` actually do?
-
-I'm gonna let you in on a little secret.
-
-`chenv` is stupidly simple — SO RIDICULOUSLY simple.
-
-It just runs shell scripts in a prespecified location (`~/.chenv`).
 
 
 ## Project Setup
@@ -89,6 +81,16 @@ cp "$SCRIPT_DIR/config.staging.json" $WEB_CONFIG
 ```
 
 Now when you run `chenv foobar staging` the above shell script will be run.
+
+
+## FAQ
+
+* Q: is `chenv` a build tool (like `make`, `scons` etc)?
+  A: No. Eh, Well, not really. Not unless use it like a build tool. It's more of a meta-config tool. If you use it like a build tool then yes, it's a build tool.
+
+* Q: What does `chenv` actually do?
+  A: I'm gonna let you in on a little secret. `chenv` is stupidly simple — SO RIDICULOUSLY simple. It just runs shell scripts in a prespecified location (`~/.chenv`).
+
 
 ## Caveats
 
