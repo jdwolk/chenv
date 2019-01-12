@@ -92,9 +92,13 @@ Now when you run `chenv foobar staging` the above shell script will be run.
 
 ## Caveats
 
+* It probably goes without saying, but `chenv` is a band-aid. Ideally your codebases don't hardcode config vars and/or they all read configs from the same places. You should probably fix that. When you can't, `chenv` is your friend.
+
 * `chenv` doesn't know _anything_ about the shell scripts for the env you're switching to. It just runs them. So be careful.
 
 * The scripts for each env should probably `git checkout` the config file you're munging for each codebase so you have a clean starting point to munge. Otherwise you won't be able to cleanly switch between multiple envs.
+
+* Since your env scripts probably munge your configs, you probably shouldn't check those configs back into source control. Like I said above, `chenv` is a band-aid.
 
 * When possible, you should probably just copy over example config files to their destinations instead of munging via `sed` but it's not always possible.
 
@@ -104,4 +108,6 @@ Now when you run `chenv foobar staging` the above shell script will be run.
 
 ## TODO
 * Make install not suck
+* Use a proper CLI framework
+* Add a config option or tool to generate new skeleton project
 
