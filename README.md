@@ -1,0 +1,97 @@
+# chenv
+
+`chenv` (CHange ENV) is a CLI tool for managing config changes to multiple codebases simultaneously.
+
+Imagine you have 3 codebases for a project called foobar:
+
+* Foobar API
+* Foobar App
+* Foobar web frontend
+
+Each codebase uses its own text-based config format, or (WORSE) uses hardcoded config variables.
+
+Now imagine you want to switch your entire stack to point to a `staging` environment.
+
+Don't trip. `chenv` got you:
+
+```
+$ chenv foobar staging
+```
+
+BAM!!! Just like that, configs for all of your codebases were changed to point to `staging`.
+
+How do you know?
+
+```
+$ whichenv foobar // => staging
+```
+
+Awwwww yeah.
+
+## Install
+
+```
+$ cd ~ && git clone https://github.com/jdwolk/chenv
+$ mkdir ~/.chenv
+```
+
+You should also copy the shell scripts in `bin/` to somewhere on your `$PATH`. You'll need to change paths so they point to wherever you installed `chenv` (`~/chenv` in the example above).
+
+## Project Setup
+
+`chenv` is stupidly simple — it just runs shell scripts in a prespecified location (`~/.chenv`).
+
+To set up a new project, make a new project directory under `~/.chenv`:
+
+```
+$ mkdir ~/.chenv/foobar
+```
+
+Then, for each env, create an executable script named `<NAME OF ENV>.sh`, i.e.:
+
+```
+# in ~/.chenv/foobar/staging.sh:
+
+SCRIPT_DIR="$HOME/.chenv/foobar"
+
+##############
+# Foobar API #
+##############
+API_CONFIG="~/projects/foobar/api/.env"
+
+cp "$SCRIPT_DIR/.staging.env" $API_CONFIG
+
+##############
+# Foobar App #
+##############
+APP_DIR="~/projects/foobar/app"
+APP_CONFIG="$APP_DIR/app.config.js"
+
+cd $APP_DIR && git checkout -- $APP_CONFIG && cd -;
+
+sed -i '' "s/.*var apiUrl=.*$/    var apiUrl = \'http:\/\/foobar.staging.com/api\';/" $APP_CONFIG
+
+#######################
+# Foobar Web Frontend #
+#######################
+WEB_DIR="~/projects/foobar/web"
+WEB_CONFIG="$APP_DIR/config.json"
+
+cp "$SCRIPT_DIR/config.staging.json" $WEB_CONFIG
+```
+
+## Caveats
+
+* `chenv` doesn't know _anything_ about the shell scripts for the env you're switching to. It just runs them. So be careful.
+
+* The scripts for each env should probably `git checkout` the config file you're munging for each codebase so you have a clean starting point to munge. Otherwise you won't be able to cleanly switch between multiple envs.
+
+* When possible, you should probably just copy over example config files to their destinations instead of munging via `sed` but it's not always possible.
+
+* To make copying files easy, you probably want to adopt a naming convention of <NAME OF FILE>.<ENV>.<EXTENSIONS>. Then you just copy files for the correct env.
+
+* You probably want to check your `chenv` configs into source control since it's a bit of work to write those configs for each env. If you do this, make sure you check into a PRIVATE REPO (for obvious reasons...)
+
+## TODO
+* Make install not suck
+
