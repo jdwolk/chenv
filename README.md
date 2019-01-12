@@ -2,7 +2,7 @@
 
 `chenv` (CHange ENV) is a CLI tool for managing config changes to multiple codebases simultaneously.
 
-Imagine you have 3 codebases for a project called foobar:
+Imagine you have 3 codebases for a project called `foobar`:
 
 * Foobar API
 * Foobar App
@@ -18,7 +18,7 @@ Don't trip. `chenv` got you:
 $ chenv foobar staging
 ```
 
-BAM!!! Just like that, configs for all of your codebases were changed to point to `staging`.
+BAM!!! Just like that, configs for all of your codebases now point to `staging`.
 
 How do you know?
 
@@ -35,11 +35,19 @@ $ cd ~ && git clone https://github.com/jdwolk/chenv
 $ mkdir ~/.chenv
 ```
 
-You should also copy the shell scripts in `bin/` to somewhere on your `$PATH`. You'll need to change paths so they point to wherever you installed `chenv` (`~/chenv` in the example above).
+You should also copy the shell scripts in `bin/` to somewhere on your `$PATH`. You'll need to change paths so they point to wherever you installed `chenv` (`~/.chenv` in the example above).
+
+
+## What does `chenv` actually do?
+
+I'm gonna let you in on a little secret.
+
+`chenv` is stupidly simple — SO RIDICULOUSLY simple.
+
+It just runs shell scripts in a prespecified location (`~/.chenv`).
+
 
 ## Project Setup
-
-`chenv` is stupidly simple — it just runs shell scripts in a prespecified location (`~/.chenv`).
 
 To set up a new project, make a new project directory under `~/.chenv`:
 
@@ -79,6 +87,8 @@ WEB_CONFIG="$APP_DIR/config.json"
 
 cp "$SCRIPT_DIR/config.staging.json" $WEB_CONFIG
 ```
+
+Now when you run `chenv foobar staging` the above shell script will be run.
 
 ## Caveats
 
