@@ -93,6 +93,9 @@ Now when you run `chenv foobar staging` the above shell script will be run.
 
   A: I'm gonna let you in on a little secret. `chenv` is stupidly simple — SO RIDICULOUSLY simple. It just runs shell scripts in a prespecified location (`~/.chenv`).
 
+* Q: You know the name `chenv` has [been](https://www.npmjs.com/package/chenv) [used](https://github.com/betamatt/chenv) [before](https://github.com/johnmcconnell/chenv) right?
+
+  A: Yeah. But a.) none of those tools do what I want and b.) it's SUCH a great name for this util!
 
 ## Caveats
 
