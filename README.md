@@ -102,7 +102,7 @@ Now when you run `chenv foobar staging` the above shell script will be run.
 
 * When possible, you should probably just copy over example config files to their destinations instead of munging via `sed` but it's not always possible.
 
-* To make copying files easy, you probably want to adopt a naming convention of <NAME OF FILE>.<ENV>.<EXTENSIONS>. Then you just copy files for the correct env.
+* To make copying files easy, you probably want to adopt a naming convention of ```<NAME OF FILE>.<ENV>.<EXTENSIONS>```. Then you just copy files for the correct env.
 
 * You probably want to check your `chenv` configs into source control since it's a bit of work to write those configs for each env. If you do this, make sure you check into a PRIVATE REPO (for obvious reasons...)
 
