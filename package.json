@@ -8,5 +8,8 @@
     "js-yaml": "^3.12.1",
     "ramda": "^0.26.1",
     "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "pkg": "^4.3.7"
   }
 }

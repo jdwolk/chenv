@@ -31,12 +31,19 @@ Awwwww yeah.
 
 ## Install
 
+Copy the appropriate binaries in `/bin` to somewhere on your `$PATH`, i.e. for mac:
+
 ```
-$ cd ~ && git clone https://github.com/jdwolk/chenv
-$ mkdir ~/.chenv
+$ cp ./bin/chenv-macos /usr/local/bin/chenv && cp ./bin/whichenv-macos /usr/local/bin/whichenv
 ```
 
-You should also copy the shell scripts in `bin/` to somewhere on your `$PATH`. You'll need to change paths so they point to wherever you installed `chenv` (`~/.chenv` in the example above).
+Or build it yourself:
+
+```
+$ npx pkg ./chenv.js && npx pkg ./whichenv.js
+```
+
+Then move the built binaries wherever you need them.
 
 
 ## Project Setup
@@ -114,7 +121,6 @@ Now when you run `chenv foobar staging` the above shell script will be run.
 * You probably want to check your `chenv` configs into source control since it's a bit of work to write those configs for each env. If you do this, make sure you check into a PRIVATE REPO (for obvious reasons...)
 
 ## TODO
-* Make install not suck
 * Use a proper CLI framework
 * Add a config option or tool to generate new skeleton project
 
